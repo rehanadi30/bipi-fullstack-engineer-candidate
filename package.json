@@ -17,12 +17,14 @@
   },
   "homepage": "https://github.com/rehanadi30/bipi-fullstack-engineer-candidate#readme",
   "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "graphql": "^16.6.0",
     "knex": "^2.3.0",
     "mysql": "^2.18.1",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "postgraphile": "^4.12.12"
   }
 }

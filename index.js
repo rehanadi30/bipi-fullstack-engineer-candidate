@@ -11,6 +11,9 @@ var schema = buildSchema(`
         merchant(id: Int!): Merchant
         merchants(merchant_name:String): [Merchant]
     },
+    type Mutation {
+        updateMerchantName(id: Int!, merchant_name: String!): Merchant
+    },
     type Merchant {
         id: Int
         merchant_name: String
@@ -33,6 +36,8 @@ var merchantsData = [
         recorded_date_time: '2022-12-16 07:00:00.000 +0700'
     }
 ]
+
+// var merchantsData = await knex('merchants');
 
 var getMerchant = function(args) {
     var id = args.id;
@@ -88,6 +93,8 @@ app.get('/merchants', async (req, res) => {
     }
 })
 
+//EXPRESS FUNCTIONS
+
 // ADD A MERCHANT
 app.post('/merchants', async (req, res) => {
     try {
@@ -111,6 +118,67 @@ app.post('/merchants', async (req, res) => {
             latitude,
             longitude,
             recordedDateTime
+        })
+    } catch (e) {
+        console.log(e);
+        next(e)
+    }
+})
+
+app.put('/merchants/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        let merchantName = req.body.merchant_name;
+        let phoneNumber = req.body.phone_number;
+        let latitude = req.body.latitude;
+        let longitude = req.body.longitude;
+        let recordedDateTime = req.body.recorded_date_time;
+        
+        await knex('merchants').where('id', id).update({
+            "merchant_name" : merchantName,
+            "phone_number" : phoneNumber,
+            "latitude" : latitude,
+            "longitude" : longitude,
+            "recorded_date_time" : recordedDateTime
+        })        
+        res.json({
+            id,
+            merchantName,
+            phoneNumber,
+            latitude,
+            longitude,
+            recordedDateTime
+        })
+    } catch (e) {
+        console.log(e);
+        next(e)
+    }
+})
+
+app.delete('/merchants/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        
+        await knex('merchants').where('id', id).del()        
+        res.json({
+            id,
+        })
+    } catch (e) {
+        console.log(e);
+        next(e)
+    }
+})
+
+app.put('/merchants/toggle/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+
+        await knex('merchants').update({ 
+            "is_active": knex.raw('NOT ??',  ["is_active"]) 
+          }).returning('is_active');
+           
+        res.json({
+            id
         })
     } catch (e) {
         console.log(e);
