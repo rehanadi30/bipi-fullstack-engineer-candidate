@@ -95,7 +95,7 @@ app.get('/merchants', async (req, res) => {
 
 //EXPRESS FUNCTIONS
 
-// ADD A MERCHANT
+// CREATE NEW MERCHANT
 app.post('/merchants', async (req, res) => {
     try {
         let merchantName = req.body.merchant_name;
@@ -125,6 +125,7 @@ app.post('/merchants', async (req, res) => {
     }
 })
 
+// UPDATE A MERCHANT
 app.put('/merchants/:id', async (req, res) => {
     try {
         let id = req.params.id;
@@ -155,6 +156,7 @@ app.put('/merchants/:id', async (req, res) => {
     }
 })
 
+// DELETE A MECRHANT WITH ID
 app.delete('/merchants/:id', async (req, res) => {
     try {
         let id = req.params.id;
@@ -169,6 +171,7 @@ app.delete('/merchants/:id', async (req, res) => {
     }
 })
 
+// TOGGLE IS ACTIVE
 app.put('/merchants/toggle/:id', async (req, res) => {
     try {
         let id = req.params.id;
